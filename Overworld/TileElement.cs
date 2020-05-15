@@ -17,6 +17,6 @@ namespace TheGauntlet.Overworld
                 _position.X = Math.Clamp(value.X, 0, 9);
                 _position.Y = Math.Clamp(value.Y, 0, 9);
             } 
-        };
+        }
     }
 }
