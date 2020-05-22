@@ -44,8 +44,11 @@ namespace TheGauntlet.Battle
         public void DoMove(Combatant target, int moveIndex)
         {
             var move = Moves[moveIndex];
-
-            if (_random.Next(0, 100) < move.Accuracy)
+            if (target.StatusEffect == StatusEffect.Stun)
+            {
+                Console.WriteLine($"{Name} is stunned and can't move!");
+            }
+            else if (_random.Next(0, 100) < move.Accuracy)
             {
                 int damage = (Attack - target.Defence / 2) * move.Power;
 
