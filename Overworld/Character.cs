@@ -6,8 +6,8 @@ namespace TheGauntlet.Overworld
 {
     public class Character : TileElement
     {
-        public char DisplayCharacter { get; set; }
-        public List<Item> Inventory { get; set; }
+        public override char DisplayCharacter => 'O';
+        public List<Item> Inventory = new List<Item>();
         public int Speed { get; set; }
     }
 }

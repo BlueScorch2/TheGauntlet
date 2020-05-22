@@ -7,78 +7,123 @@ namespace TheGauntlet.Overworld
     public class OverworldGrid
     {
 		public Character Character { get; set; }
-		public Chest[] Chests { get; set; } = new Chest[_numChests];
-        public Tile[,] Tile { get; set; }
+        public Tile[,] Tiles { get; set; }
 
-		private Random _random;
+		private readonly Random _random;
 
-        private const int gridWidth = 10;
-        private const int gridLength = 10;
+        private const int _gridWidth = 11;
+        private const int _gridLength = 11;
 		private const int _numChests = 20;
 
-        public OverworldGrid()
+        public OverworldGrid(Random random)
 		{
-            for (int i = 0; i < gridWidth; i++)
+			Tiles = new Tile[_gridWidth, _gridLength];
+            
+            _random = random;
+
+			Character = new Character()
+            { 
+                Position = new TileCoordinate(5, 5)
+            };
+
+            for (int i = 0; i < _gridWidth; i++)
             {
-                for (int j = 0; j < gridLength; j++)
-				{
-					Tile[i,j] = new Tile();
-                    Tile[i, j].DisplayCharacter = '+';
-				}
+                for (int j = 0; j < _gridLength; j++)
+                {
+                    Tiles[i, j] = new Tile();
+                }
             }
+
+            Tiles[5, 5].Element = Character;
+
+			PlaceChests();
 		}
 
         public void Display()
         {
-            for (int i = 0; i < gridWidth; i++)
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine(@"
+
+     ______________________________      
+    |                               |    ");
+            for (int i = 0; i < _gridWidth; i++)
             {
-                for (int j = 0; j < gridLength; j++)
+                Console.Write("    |    ");
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ForegroundColor = ConsoleColor.Black;
+                Console.Write("|");
+                for (int j = 0; j < _gridLength; j++)
                 {
-                    Console.WriteLine(Tile[i,j].DisplayCharacter);
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write(Tiles[j, i].DisplayCharacter);
+                    Console.ForegroundColor = ConsoleColor.Black;
+                    Console.Write("|");
                 }
+                Console.BackgroundColor = ConsoleColor.DarkGreen;
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.Write("    |    ");
+                Console.WriteLine();
+            }
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+            Console.WriteLine(@"    |                               |    
+    |                               |    
+    |_______________________________|    
+
+");
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        public void MoveCharacter(int right, int down)
+        {
+            var newPosition = Character.Position + (right, down);
+            if (newPosition.X >= 0 && newPosition.X < _gridWidth && newPosition.Y >= 0 && newPosition.Y < _gridLength)
+            {
+                if (Tiles[newPosition.X, newPosition.Y].Element is Chest chest)
+                {
+                    Character.Inventory.Add(chest.Item);
+                }
+
+                Tiles[Character.Position.X, Character.Position.Y].Element = new TrampledTile() 
+                {
+                    Position = Character.Position
+                };
+
+                Character.Position = newPosition;
+                Tiles[Character.Position.X, Character.Position.Y].Element = Character;
             }
         }
 
         public void PlaceChests()
         {
-			int chests = 0;
-            while(chests < _numChests)
+            Chest chest;
+
+            for (int i = 0; i < _numChests; i++)
 			{
-				int randX = _random.Next(0, 11);
-				int randY = _random.Next(0, 11);
+                int randX = _random.Next(0, _gridWidth);
+                int randY = _random.Next(0, _gridLength);
 
-                for (int i = 0; i < Chests.Length; i++)
+                if (Tiles[randX, randY].Element == null)
 				{
-                    if ((Chests[i].Position.X != randX) && (Chests[i].Position.Y != randY))
-					{
-						Chests[i] = new Chest();
-                        Chests[i].DisplayCharacter = 'C';
+					chest = new Chest()
+                    {
+                        Position = new TileCoordinate(randX, randY)
+                    };
+                    Tiles[randX, randY].Element = chest;
 
-                        chests++;
+					int itemType = _random.Next(1, 5);
 
-						int itemType = _random.Next(1, 5);
-
-                        switch (itemType)
-						{
-							case 1:
-								Chests[i].Item = ItemContainer.AttackBoost;
-                                break;
-                            case 2:
-                                Chests[i].Item = ItemContainer.DefenceBoost;
-                                break;
-							case 3:
-								Chests[i].Item = ItemContainer.HealthBoost;
-								break;
-                            case 4:
-								Chests[i].Item = ItemContainer.SpeedBoost;
-								break;
-                            default:
-                                break;
-						}
-					}
+                    chest.Item = itemType switch
+                    {
+                        1 => ItemContainer.AttackBoost,
+                        2 => ItemContainer.DefenceBoost,
+                        3 => ItemContainer.HealthBoost,
+                        _ => ItemContainer.SpeedBoost
+                    };
 				}
-                
-			}
+			}  
 		}
     }
 }

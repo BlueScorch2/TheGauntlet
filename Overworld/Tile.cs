@@ -4,9 +4,9 @@ using System.Text;
 
 namespace TheGauntlet.Overworld
 {
-    class Tile
+    public class Tile
     {
-		public char DisplayCharacter { get; set; };
-		public TileCoordinate Position { get; set; };
+		public char DisplayCharacter => Element?.DisplayCharacter ?? '-'; 
+		public TileElement Element { get; set; }
     }
 }

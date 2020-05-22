@@ -28,6 +28,10 @@ namespace TheGauntlet.Battle
             specialEffect: (user, target, damage) =>
             {
                 user.Defence += 2;
+
+                Console.ForegroundColor = ConsoleColor.Cyan;
+                Console.WriteLine($"{user.Name}'s defence went up by 2!");
+                Console.ForegroundColor = ConsoleColor.White;
             });
 
         public static Move UltimateSlam = new Move(
@@ -38,7 +42,10 @@ namespace TheGauntlet.Battle
             specialEffect: (user, target, damage) =>
             {
                 target.StatusEffect = StatusEffect.Stun;
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"{target.Name} was stunned!");
+                Console.ForegroundColor = ConsoleColor.White;
             });
 
         public static Move Shinobi = new Move(
@@ -49,7 +56,10 @@ namespace TheGauntlet.Battle
             specialEffect: (user, target, damage) =>
             {
                 target.StatusEffect = StatusEffect.Poison;
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"{target.Name} was poisoned!");
+                Console.ForegroundColor = ConsoleColor.White;
             });
 
         public static Move LifeDrain = new Move(
@@ -60,7 +70,10 @@ namespace TheGauntlet.Battle
             specialEffect: (user, target, damage) =>
             {
                 user.Health += damage / 2;
+
+                Console.ForegroundColor = ConsoleColor.Magenta;
                 Console.WriteLine($"{user.Name} stole {damage / 2} health!");
+                Console.ForegroundColor = ConsoleColor.White;
             });
 
         public static Move Fireball = new Move(
@@ -71,7 +84,10 @@ namespace TheGauntlet.Battle
             specialEffect: (user, target, damage) =>
             {
                 target.StatusEffect = StatusEffect.Burn;
+
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"{target.Name} was burned!");
+                Console.ForegroundColor = ConsoleColor.White;
             });
     }
 }

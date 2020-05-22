@@ -4,19 +4,19 @@ using System.Text;
 
 namespace TheGauntlet.Overworld
 {
-    abstract class TileElement
+    public abstract class TileElement
     {
-        public char DisplayCharacter { get; set; }
+        public abstract char DisplayCharacter { get; }
 
         private TileCoordinate _position;
-        public TileCoordinate Position 
+        public TileCoordinate Position
         {
             get => _position;
-            set 
+            set
             {
-                _position.X = Math.Clamp(value.X, 0, 9);
-                _position.Y = Math.Clamp(value.Y, 0, 9);
-            } 
+                _position.X = Math.Clamp(value.X, 0, 10);
+                _position.Y = Math.Clamp(value.Y, 0, 10);
+            }
         }
     }
 }

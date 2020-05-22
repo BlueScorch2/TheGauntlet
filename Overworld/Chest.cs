@@ -6,7 +6,7 @@ namespace TheGauntlet.Overworld
 {
     public class Chest : TileElement
     {
-        public char DisplayCharacter { get; set; }
+        public override char DisplayCharacter => 'C';
         public Item Item { get; set; }
     }
 }
