@@ -41,11 +41,11 @@ namespace TheGauntlet.Overworld
 
         public void Display()
         {
+            Console.Clear();
+            Console.WriteLine();
             Console.BackgroundColor = ConsoleColor.DarkGreen;
             Console.ForegroundColor = ConsoleColor.DarkGreen;
-            Console.WriteLine(@"
-
-     ______________________________      
+            Console.WriteLine(@" __________________________________      
     |                               |    ");
             for (int i = 0; i < _gridWidth; i++)
             {
@@ -62,16 +62,13 @@ namespace TheGauntlet.Overworld
                 }
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
                 Console.ForegroundColor = ConsoleColor.DarkGreen;
-                Console.Write("    |    ");
-                Console.WriteLine();
+                Console.WriteLine("    |    ");
             }
             Console.BackgroundColor = ConsoleColor.DarkGreen;
             Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine(@"    |                               |    
     |                               |    
-    |_______________________________|    
-
-");
+    |_______________________________|    ");
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
         }

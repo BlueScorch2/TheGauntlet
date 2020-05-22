@@ -49,7 +49,7 @@ namespace TheGauntlet.Battle
 			display.Append(string.Concat(Enumerable.Repeat(" ", playerRightSpaces)));
 
 			display.Append(string.Concat(Enumerable.Repeat(" ", enemyLeftSpaces)));
-			display.Append(playerChar);
+			display.Append(enemyChar);
 			display.Append(string.Concat(Enumerable.Repeat(" ", enemyRightSpaces)));
 
 			display.Append("\n");
@@ -85,26 +85,26 @@ namespace TheGauntlet.Battle
 
 			display.Append(string.Concat(Enumerable.Repeat(" ", playerLeftSpaces)));
 			display.Append(string.Concat(playerHealth));
-			display.Append(Enumerable.Repeat(" ", playerRightSpaces));
+			display.Append(string.Concat(Enumerable.Repeat(" ", playerRightSpaces)));
 
-			display.Append(Enumerable.Repeat(" ", enemyLeftSpaces));
+			display.Append(string.Concat(Enumerable.Repeat(" ", enemyLeftSpaces)));
 			display.Append(enemyHealth);
 			display.Append(string.Concat(Enumerable.Repeat(" ", enemyRightSpaces)));
 
 			display.Append("\n");
 			display.Append("\n");
 
-			// attacks
-
-			display.Append("Choose an attack:");
+            // attacks
 
             for (int i = 0; i < Player.Moves.Count; i++)
-			{
-				var move = Player.Moves[i];
-				display.Append($"[{i + 1}] {move.Name} (Power: {move.Power}, Accuracy: {move.Accuracy}%) {move.Description}");
-			}
+            {
+                display.AppendLine($"[{i + 1}] {Player.Moves[i].Name}: (Power: {Player.Moves[i].Power}, Accuracy: {Player.Moves[i].Accuracy}%) {Player.Moves[i].Description}");
+            }
 
-			Console.WriteLine(display);
+            display.Append("\nEnter attack: ");
+            Console.WriteLine();
+
+            Console.Write(display);
 		}
 
         private static void ApplyStatusEffect(Combatant combatant)
@@ -143,11 +143,11 @@ namespace TheGauntlet.Battle
 
         private void CreateEnemy()
         {
-            int baseHealth = 500;
+            const int baseHealth = 100;
             Enemy = new Combatant(random: _random)
             {
                 Name = $"Enemy {_round}",
-                MaxHealth = baseHealth + _random.Next(_statBounds.lower * 100, _statBounds.upper * 100),
+                MaxHealth = baseHealth + _random.Next(_statBounds.lower * 80, _statBounds.upper * 80),
                 Attack = _random.Next(_statBounds.lower, _statBounds.upper),
                 Defence = _random.Next(_statBounds.lower, _statBounds.upper),
                 Speed = _random.Next(_statBounds.lower, _statBounds.upper),
@@ -158,20 +158,6 @@ namespace TheGauntlet.Battle
                     MoveContainer.Toughen
                 }
             };
-        }
-
-        private void DisplayPlayerAttacks()
-        {
-            var output = new StringBuilder();
-
-            for (int i = 0; i < Player.Moves.Count; i++)
-            {
-                output.AppendLine($"[{i}] {Player.Moves[i].Name}: (Power: {Player.Moves[i].Power}, Accuracy: {Player.Moves[i].Accuracy}) {Player.Moves[i].Description})");
-            }
-
-            output.AppendLine("Enter attack: ");
-
-            Console.WriteLine(output.ToString());
         }
 
         private void EnemyAttack()
@@ -186,8 +172,6 @@ namespace TheGauntlet.Battle
                 Console.Clear();
 
                 Display();
-
-                DisplayPlayerAttacks();
 
                 _game.GetInput();
 
@@ -225,7 +209,7 @@ namespace TheGauntlet.Battle
                     }
                 }
 
-                Console.WriteLine("Press any key to continue...");
+                Console.WriteLine("\nPress any key to continue...");
                 Console.ReadKey();
             }
             while (Player.Health != 0);

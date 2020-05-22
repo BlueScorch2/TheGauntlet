@@ -85,7 +85,7 @@ namespace TheGauntlet.Battle
             {
                 target.StatusEffect = StatusEffect.Burn;
 
-                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine($"{target.Name} was burned!");
                 Console.ForegroundColor = ConsoleColor.White;
             });

@@ -49,6 +49,11 @@ namespace TheGauntlet.Battle
             {
                 int damage = (Attack - target.Defence / 2) * move.Power;
 
+                if (damage < 0)
+                {
+                    damage = 0;
+                }
+
                 target.Health -= damage;
 
                 Console.WriteLine($"{Name} used {move.Name}!\n{Name} dealt {damage} damage to {target.Name}!");

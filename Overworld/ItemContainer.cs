@@ -17,8 +17,8 @@ namespace TheGauntlet.Overworld
         });
 
         public static Item HealthBoost = new Item(name: "Health Boost", onApply: (player) => {
-            player.Health += 2;
-            Console.WriteLine("Health increased by 2!");
+            player.MaxHealth += 20;
+            Console.WriteLine("Health increased by 20!");
         });
 
         public static Item SpeedBoost = new Item(name: "Speed Boost", onApply: (player) => {

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace TheGauntlet
 {
-	enum GameState
+	public enum GameState
 	{
 		ChoosingClass,
 		Overworld,

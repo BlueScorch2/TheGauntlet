@@ -9,11 +9,10 @@ namespace TheGauntlet
 {
     public class Game
     {
-        private const int _maximumMoves = 30;
-
         private BattleController _battleController;
         private GameState _gameState;
         private OverworldGrid _overworldGrid;
+        private int _maximumMoves;
         private int _moves;
         private Combatant _playerCombatant;
         private readonly Random _random = new Random();
@@ -27,6 +26,8 @@ namespace TheGauntlet
             {
                 item.OnApply(_playerCombatant);
             }
+
+            Console.WriteLine($"\nFinal Stats\nHealth: {_playerCombatant.Health}\nAttack: {_playerCombatant.Attack}\nDefence: {_playerCombatant.Defence}\nSpeed: {_playerCombatant.Speed}\n");
 
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Press any key to continue...");
@@ -90,7 +91,7 @@ namespace TheGauntlet
                     case ConsoleKey.D1:
 						_playerCombatant = new Combatant(random: _random)
 						{
-							Health = baseHealth + 80,
+							MaxHealth = baseHealth + 80,
 							Attack = 6,
 							Defence = 9,
 							Speed = 2,
@@ -107,7 +108,7 @@ namespace TheGauntlet
                     case ConsoleKey.D2:
                         _playerCombatant = new Combatant(random: _random)
                         {
-                            Health = baseHealth + 40,
+                            MaxHealth = baseHealth + 40,
                             Attack = 8,
                             Defence = 3,
                             Speed = 10,
@@ -124,7 +125,7 @@ namespace TheGauntlet
                     case ConsoleKey.D3:
                         _playerCombatant = new Combatant(random: _random)
                         {
-                            Health = baseHealth + 60,
+                            MaxHealth = baseHealth + 60,
                             Attack = 8,
                             Defence = 5,
                             Speed = 6,
@@ -141,11 +142,11 @@ namespace TheGauntlet
                     case ConsoleKey.D4:
                         _playerCombatant = new Combatant(random: _random)
                         {
-                            Health = baseHealth + 90,
+                            MaxHealth = baseHealth + 90,
                             Attack = 9,
                             Defence = 2,
                             Speed = 5,
-                            Name = "Dark mage",
+                            Name = "Dark Mage",
                             Moves = new List<Move>()
                             {
                                 MoveContainer.Punch,
@@ -156,6 +157,8 @@ namespace TheGauntlet
                         };
                         break;
                 }
+                const int baseMaximumMoves = 0;
+                _maximumMoves = 10 + _playerCombatant.Speed;
             }
 
             else if (_gameState == GameState.Overworld)
@@ -176,32 +179,30 @@ namespace TheGauntlet
 				switch (key.Key)
                 {
                     case ConsoleKey.W:
-                        _overworldGrid.MoveCharacter(-1, 0);
-                        _moves++;
-                        _overworldGrid.Display();
-                        Console.WriteLine($"Moves left: {_maximumMoves - _moves}");
-                        break;
-                    case ConsoleKey.A:
                         _overworldGrid.MoveCharacter(0, -1);
                         _moves++;
                         _overworldGrid.Display();
                         Console.WriteLine($"Moves left: {_maximumMoves - _moves}");
                         break;
-                    case ConsoleKey.S:
-                        _overworldGrid.MoveCharacter(1, 0);
+                    case ConsoleKey.A:
+                        _overworldGrid.MoveCharacter(-1, 0);
                         _moves++;
                         _overworldGrid.Display();
                         Console.WriteLine($"Moves left: {_maximumMoves - _moves}");
                         break;
-                    case ConsoleKey.D:
+                    case ConsoleKey.S:
                         _overworldGrid.MoveCharacter(0, 1);
                         _moves++;
                         _overworldGrid.Display();
                         Console.WriteLine($"Moves left: {_maximumMoves - _moves}");
                         break;
+                    case ConsoleKey.D:
+                        _overworldGrid.MoveCharacter(1, 0);
+                        _moves++;
+                        _overworldGrid.Display();
+                        Console.WriteLine($"Moves left: {_maximumMoves - _moves}");
+                        break;
                 }
-
-                _overworldGrid.Display();
             }
 
             else
@@ -218,27 +219,13 @@ namespace TheGauntlet
 					}
 				}
 
-                bool inputParsed;
-                int moveIndex;
-                string input = Console.ReadLine();
-                do
-                {
-                    inputParsed = int.TryParse(input, out moveIndex);
-                }
-                while (!inputParsed);
-                _battleController.SetPlayerAttack(moveIndex);
-
-                switch (key.Key)
-                {
-                    case ConsoleKey.D1:
-                        break;
-                    case ConsoleKey.D2:
-                        break;
-                    case ConsoleKey.D3:
-                        break;
-                    case ConsoleKey.D4:
-                        break;
-                }
+                _battleController.SetPlayerAttack(key.Key switch
+                { 
+                    ConsoleKey.D1 => 0,
+                    ConsoleKey.D2 => 1,
+                    ConsoleKey.D3 => 2,
+                    ConsoleKey.D4 => 3
+                });
             }
         }
 
