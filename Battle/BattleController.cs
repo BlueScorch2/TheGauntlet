@@ -216,6 +216,9 @@ namespace TheGauntlet.Battle
 
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("You died!");
+            Console.WriteLine($"You survived up to round {_round}");
+            Console.WriteLine();
+            Console.ReadLine();
         }
 
         private void PlayerAttack()
