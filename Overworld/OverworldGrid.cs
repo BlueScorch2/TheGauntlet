@@ -82,12 +82,10 @@ namespace TheGauntlet.Overworld
                 {
                     Character.Inventory.Add(chest.Item);
                 }
-
                 Tiles[Character.Position.X, Character.Position.Y].Element = new TrampledTile() 
                 {
                     Position = Character.Position
                 };
-
                 Character.Position = newPosition;
                 Tiles[Character.Position.X, Character.Position.Y].Element = Character;
             }

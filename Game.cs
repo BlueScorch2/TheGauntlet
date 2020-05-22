@@ -58,12 +58,22 @@ namespace TheGauntlet
         private void ChooseClass()
         {
 			_gameState = GameState.ChoosingClass;
-            Console.WriteLine(@"Choose your class:
-[1]: Tank
-[2]: Ninja
-[3]: Mage
-[4]: Dark Mage
-");
+//            Console.WriteLine(@"Choose your class:
+//[1]: Tank
+//[2]: Ninja
+//[3]: Mage
+//[4]: Dark Mage
+//");
+            Console.WriteLine("Choose your class:");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("[1]: Tank");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("[2]: Ninja");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("[3]: Mage");
+            Console.ForegroundColor = ConsoleColor.Magenta;
+            Console.WriteLine("[4]: Dark Mage");
+            Console.ForegroundColor = ConsoleColor.Yellow;
             GetInput();
         }
 
