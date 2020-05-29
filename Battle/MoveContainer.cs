@@ -17,7 +17,7 @@ namespace TheGauntlet.Battle
             name: "Body Slam",
             description: "Slams into the target.",
             power: 60, 
-            accuracy: 60, 
+            accuracy: 70, 
             specialEffect: null);
 
         public static Move Toughen = new Move(
@@ -46,7 +46,7 @@ namespace TheGauntlet.Battle
         public static Move UltimateSlam = new Move(
             name: "Ultimate Slam",
             description: "Charges into the target, stunning them.",
-            power: 70, 
+            power: 60, 
             accuracy: 60,
             specialEffect: (user, target, damage) =>
             {
