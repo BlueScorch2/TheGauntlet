@@ -27,11 +27,20 @@ namespace TheGauntlet.Battle
             accuracy: 100, 
             specialEffect: (user, target, damage) =>
             {
-                user.Defence += 2;
-
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.WriteLine($"{user.Name}'s defence went up by 2!");
-                Console.ForegroundColor = ConsoleColor.White;
+                if (user.Defence >=20)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"{user.Name}'s defence is now max");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
+                }
+                else
+                {
+                    user.Defence += 2;
+                    Console.ForegroundColor = ConsoleColor.Cyan;
+                    Console.WriteLine($"{user.Name}'s defence went up by 2!");
+                    Console.ForegroundColor = ConsoleColor.White;
+                }                
             });
 
         public static Move UltimateSlam = new Move(

@@ -47,14 +47,19 @@ namespace TheGauntlet.Battle
             if (target.StatusEffect == StatusEffect.Stun)
             {
                 Console.WriteLine($"{Name} is stunned and can't move!");
+                target.StatusEffect = StatusEffect.None;
             }
             else if (_random.Next(0, 100) < move.Accuracy)
             {
                 int damage = (Attack - target.Defence / 2) * move.Power;
 
-                if (damage < 0)
+                if (damage <= 0 && move.Name != "Toughen")
                 {
-                    damage = 0;
+                    Console.WriteLine();
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine($"{Name} was barely able to hit {target.Name}");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    damage = _random.Next(0, 50);
                 }
 
                 target.Health -= damage;
